@@ -1,0 +1,37 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+  local:
+    useDockerCLI: true
+  tagPolicy:
+    sha256: {}
+  artifacts:
+    - image: shirito/cge-logger
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  helm:
+    releases:
+      - name: cge-logger
+        chartPath: ./charts
+        namespace: default
+        #wait: true
+        #valuesFiles:
+        #  - contrib-summary-chart/values.yaml
+        imageStrategy:
+          #fqn: {}
+          helm:
+            explicitRegistry: true
+
+        setValueTemplates:
+          repository: "{{.DIGEST}}"
+          tag: ""
+        #recreatePods will pass --recreate-pods to helm upgrade
+        #recreatePods: true
+        #overrides builds an override values.yaml file to run with the helm deploy
+        #overrides:
+        # some:
+        #   key: someValue
+        #setValues get appended to the helm deploy with --set.
+        #setValues:
+        #some.key: someValue
