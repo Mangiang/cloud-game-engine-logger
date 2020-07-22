@@ -1,4 +1,4 @@
-# Default values for cloud-game-engine-backend.
+# Default values for cloud-game-engine-logger-backend.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -38,8 +38,15 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  ports:
+  - port: 80
+    targetPort: 80
+    protocole: TCP
+    name: http
+  - port: 8081
+    targetPort: 8081
+    protocole: TCP
+    name: ws
 
 ingress:
   enabled: true
@@ -51,7 +58,11 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: localhost
-      paths: ['/plugins/logger/api']
+      paths:
+        - path: /api
+          port: 80
+        - path: /ws
+          port: 8081
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
