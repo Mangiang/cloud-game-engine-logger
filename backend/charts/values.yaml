@@ -59,9 +59,9 @@ ingress:
   hosts:
     - host: localhost
       paths:
-        - path: /api
+        - path: /plugins/logger/api
           port: 80
-        - path: /ws
+        - path: /plugins/logger/ws
           port: 8081
   tls: []
   #  - secretName: chart-example-tls
