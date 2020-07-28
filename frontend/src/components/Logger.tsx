@@ -11,7 +11,7 @@ const Logger = () => {
   const [ client, setClient ] = useState<W3CWebSocket>()
 
   useEffect(() => {
-    let myClient = new W3CWebSocket('ws://localhost/plugins/logger/ws')
+    let myClient = new W3CWebSocket('ws://localhost/plugins/cloud-game-engine-logger-backend/ws')
     myClient.onopen = () => {
       console.log('WebSocket Client Connected')
     }
